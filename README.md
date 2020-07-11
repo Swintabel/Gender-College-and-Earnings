@@ -14,9 +14,8 @@ In this project, I will be exploring the relationship that exists amongst colleg
 
 The dataset I would be using for this project is called  recent-grad.csv. As mentioned above, I retrieved it from Kaggle. According to another [kernel](https://www.kaggle.com/suugaku/dataquest-visualizing-earnings-by-college-major), the data was initially collected and aggregated by the [AMERICAN COMMUNITY SURVEY (ACS)](https://www.census.gov/programs-surveys/acs/data/pums.html). The current version of the data I will be using was extracted from the original data by [fiftythirtytwo](https://github.com/fivethirtyeight/data/tree/master/college-majors).
 
-According to [fiftythirtytwo](https://github.com/fivethirtyeight/data/tree/master/college-majors), these are the detailed desription of the various variables in the dataset.
+There are detailed discriptions of the dataset parameters at [fiftythirtytwo](https://github.com/fivethirtyeight/data/tree/master/college-majors)
 
-![](F:/micro masters/DATA ANALYSIS/capstone 3/desc header1.JPG)
 
 #### ORIGINAL PROBLEM AND QUESTIONS OF INQUIRY 
 
