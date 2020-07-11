@@ -51,7 +51,7 @@ These conclusions by these researchers have propelled me to explore this dataset
 
 2. What relationship exists between college courses and earnings?
 
-3. what relationship exists between gender and college courses?
+3. What relationship exists between gender and college courses?
 
 4. How much does gender and college course together determine earnings?
 
@@ -80,6 +80,13 @@ Lastly, since my focus here is visualization, I would not be showing any prelimi
 
 The data is basically comprised of 21 variables and 173 observations. The variables are made of elements such as;
 ```{r, include=FALSE}
+library(tidyverse)
+library(sjPlot)
+library(sjmisc)
+library(sjlabelled)
+library(grid)
+library(RColorBrewer)
+library(ggplot2)
 library(dplyr)
 ```
 
@@ -106,8 +113,7 @@ According to [fiftythirtytwo](https://github.com/fivethirtyeight/data/tree/maste
 recent_grad<-which(complete.cases(recent_grads))
 finalgrad<-recent_grads[recent_grad,]
 rm(recent_grad)
-library(tidyverse)
-library(ggplot2)
+
 ```
 
 
@@ -117,11 +123,21 @@ To begin the analysis of the data, I am curious to find out some answers to my f
 
 **1. What relationship exists between gender share of a college course and potential earnings?**
 
-To find out some answers to this question, I am making use of a scatter plot to look out for any relationship that may exist between "sharewomen" and "median earnings"
+To find out some answers to this question, I am making use of a scatter plot to look out for any relationship that may exist between "share of women" and "median earnings"
 
 #### Gender and Earnings
 
-From the diagram below, it is seen that as the percentage of women majoring in a particular course increases, the median earning of year round employees also fall. That is, there is a negative relationship between earnings and gender share of a college course.
+There are no questions when it comes to the importance of education for both men and women. In fact an old adage has said that, 'if you educate a man, you educate one person; But if you educate a woman, you educate a whole nation'. It is no wonder therefore that the girl-child education mantra seem never to die out.
+
+However, the issue of the big pay gaps that exist between men and women of equal qualifications is a problem that hunts most women looking to further their education. Is it worth it? Will it change my standard of living any significantly? In africa where jobs are hard to find in the first place, these questions lead most women to give up on education even at the basic level.
+
+As stated by a similar study, among federal financial aid recipients who attended public and private nonprofit four-year colleges, are no longer enrolled, and are working, average women’s earnings 10 years after they first enrolled are lower than average men’s earnings six years after first enrolling.(Antoinette Flores, 2016)
+
+From the diagram below, it is seen that as the percentage of women majoring in a particular course increases, the median earning of year round employees also fall. That is, there is a negative relationship between earnings and the share of women in a college course.
+
+More like, if women want the earnings of a particular profession to fall, all they have to do is to enroll more into the corresponding college course and enter the job market!
+
+It is also noticed from the diagram that, as the share of women drops, the occurences of outrageous salaries also become more ubiquitous.
 
 ```{r, echo=FALSE}
 rm(recent_grads)
@@ -149,9 +165,16 @@ plot2+theme(panel.background = element_rect(fill = "white"))+theme(panel.border 
 ```
 
 
-**2. What relationship exists between college courses and earnings?**
+#### **College Majors and Earnings**
 
-#### College Majors and Earnings
+The dream of most parents around the world is to see their children get good education and eventually, it becomes the dream of most teenagers after high school to enter into college and read their dream courses.
+
+However, most young people graduate from college to the hard reality that,'not all glitters are gold'. While some careers seem very rewarding, others are not so much rewarding. This is not to downplay the essence of education but to emphasize the need to critically examine what career path to take when choosing a college course.
+
+According to some researchers, women tend to enroll in graduate fields with lower economic returns than those chosen by men. In 2014, women enrolling in graduate school were significantly overrepresented in lower-earning fields—including public administration, health sciences, and education fields—encompassing roughly 75 percent or more of all enrollments. In contrast, women were significantly underrepresented in higher-earning fields, such as engineering, math, business, and computer sciences.(Antoinette Flores, 2016)
+
+Hence, it is worth inquiring from the data;
+**What relationship exists between college courses and earnings?** 
 
 ```{r, echo=FALSE,  fig.height=6, fig.width=9}
 plot3<-ggplot(data=major_earnings, aes(x=reorder(Major_category,-Medians), y=Medians,width=0.5, fill=Major_category, label=Medians))+geom_bar(stat = "identity")+theme(axis.text.x=element_text(angle = 90, vjust=0.5, hjust=1), legend.position ="bottom", legend.title.align = 1)+coord_flip()
@@ -159,10 +182,22 @@ plot3<-ggplot(data=major_earnings, aes(x=reorder(Major_category,-Medians), y=Med
 plot3+theme(panel.background = element_rect(fill = "white"))+labs(title="FIGURE 2: COLLEGE MAJORS AND EARNINGS", y="Median Earnings")+theme(plot.title = element_text(hjust = 0.5, face = "bold", colour = "cadetblue"))+scale_y_continuous(labels = scales::dollar)
 ```
 
+From the figure above, it is noticed that the major with the highest median earnings is Engineering and the lowest is Psychology and Social work. Computers & Mathematics as well as Business also do pay well and they are followed by Social Science, Biology and Law. The likes of Arts, Humanities& liberal Arts and Education find themselves on the lower side.
+
+This leads to the question of whether or not it is simply an issue of demand and supply. What if certain courses pay more because there very few people with these qualifications.
 
 
 
-#### 3. College Majors and Gender
+Thus, **What relationship exists between gender and college courses?**
+
+
+
+#### College Majors and Gender
+
+From the initial infromation given by the above diagram, the courses that pay most are engineering, Computer Science and Mathematics. These courses are mostly known to be 'Men Courses'. According to an article published by the Harvard Business Review, Jobs that are unconsciously coded male have more prestige and pay than jobs that are coded female (Sarah Green Carmichael, 2017).
+
+At this stage, I would like to know what the data say about 'Male courses' and 'Female courses'
+
 ```{r, echo=FALSE, fig.height=6, fig.width=9}
 
 
@@ -171,31 +206,59 @@ plot4<-ggplot(data=gendersum, aes(x=Major_category, y=count, fill=gender, width=
 plot4+theme(panel.background = element_rect(fill = "white"))+labs(title="FIGURE 3: COLLEGE MAJORS AND GENDER", y="Total Number of Students")+theme(plot.title = element_text(hjust = 0.5, face = "bold", colour = "cadetblue"))+coord_flip()
 
 ```
+**IS IT A QUESTION OF DEMAND AND SUPPLY?**
 
+From the diagram, the most noticable bar is that of the number of women in Psychology & Social Work compared to men. So then, can we say it is a matter of gender? There is also an equally competitive argument of total number of people majoring this course. The graph make it clear that they are generally higher that any other major. So it could be because of high labor supply exceeding demand for this type of labour.
+
+However, let's consider a major like interdisciplinary. It appears to have the lowest number of people with such a qualification but also has more than 50% of the people being females.Even with these few majors, it is the forth lowest in terms of earnings from 'figure 2'. Is it a matter of skills relevance to the world?
+
+I would say health is a very relevant field and therefore should pay better based on its merits. However, it pays just as low as Industrial Arts & Industrial Services as shown in 'figure 2'. Interestingly, it is almost totally dominated by women. Is it a matter of relevance to industries?
+
+Engineering although does not have a very high number of majors, it is not very low in numbers either. This is same for Computers and Mathematics but they pay very high and they account for the outrageous pays seen in 'Figure 1'. Interestingly, they are highly male dominated.
 
 ```{r, echo=FALSE, fig.height=6, fig.width=9}
-library(grid)
-library(RColorBrewer)
+
 cols<-colorRampPalette(brewer.pal(9,"Set1"))
 colourcount<-cols(length(unique(gendersum$Major_category)))
 
 
-plot6<-ggplot(data=gendersum, aes(x=gender, y=count, fill=Major_category, width=0.5, label=gender))+geom_bar(stat = "identity", width = 1)+theme(axis.text.x=element_text(angle = 90, vjust=0.5, hjust=1), legend.position ="right", legend.title.align = 0.7)+scale_y_continuous(labels = scales::comma)+scale_fill_manual(values =colourcount)
 
-plot6+theme(panel.background = element_rect(fill = "white"))+labs(title="FIGURE 3: COLLEGE MAJORS AND GENDER", y="Total Number of Students")+theme(plot.title = element_text(hjust = 0.5, face = "bold", colour = "cadetblue"))+coord_flip()
+plot6<-ggplot(data=gendersum, aes(x=gender, y=count, width=0.5, label=gender, fill=gender))+geom_bar(stat = "identity", width = 1)+theme(axis.text.x=element_text(angle = 90, vjust=0.5, hjust=1), legend.position ="right", legend.title.align = 0.7)+scale_y_continuous(labels = scales::comma)+scale_fill_manual(values =colourcount)
+
+plot6+theme(panel.background = element_rect(fill = "white"))+labs(title="FIGURE 4: COLLEGE MAJORS AND GENDER", y="Total Number of Students")+theme(plot.title = element_text(hjust = 0.5, face = "bold", colour = "cadetblue"))+coord_flip()
 
 ```
+It is also worth noting from 'figure 4' that this data set has more women that men counts. This re-emphisize how male-dominated engineering and computers & Mathematics are.
 
 
 
-** How much does gender and college course together determine earnings?**
+**How much does gender and college course together determine earnings?**
+
+#### GENDER, COLLEGE MAJOR AND EARNINGS
+
+When it comes to the interaction of the three variables, the interesting trend here is that, for any two majors with compratively equal number of majors, if the women exceed the men in one than the other, then the median pay becomes lesser. For instance, 'interdisciplinary and Education', 'Biology & Life sciences compared to Computers and Mathematics'.'engineering compared to Law & Policy'.
+
 
 ```{r, echo=FALSE, fig.height=7, fig.width=9}
 plot5<-ggplot(data=major_earnings2, aes(x=reorder(Major_category,-Medians), y=Medians,width=0.8, fill=gender2, label=Major_category))+geom_bar(stat = "identity", width=0.8, position = position_dodge(width=0.5))+theme(axis.text.x=element_text(angle = 90, vjust=0.5, hjust=1), legend.position ="top", legend.title.align = 1)+coord_flip()+geom_col(width = 0.8, position = position_dodge(0.5))
 
 
-plot5+theme(panel.background = element_rect(fill = "white"))+labs(title="FIGURE 4: COLLEGE MAJORS, GENDER AND EARNINGS", y="Median Earnings", x="Major Category")+theme(plot.title = element_text(hjust = 0.5, face = "bold", colour = "cadetblue"))+scale_y_continuous(labels = scales::dollar)+scale_fill_manual(values = c("steelblue","black","orange"))
+plot5+theme(panel.background = element_rect(fill = "white"))+labs(title="FIGURE 5: COLLEGE MAJORS, GENDER AND EARNINGS", y="Median Earnings", x="Major Category")+theme(plot.title = element_text(hjust = 0.5, face = "bold", colour = "cadetblue"))+scale_y_continuous(labels = scales::dollar)+scale_fill_manual(values = c("steelblue","black","orange"))
 ```
+
+```{r, echo=FALSE, fig.height=7, fig.width=9}
+new_data<-within(new_data,Major_category<-relevel(Major_category, ref = 'Psychology & Social Work'))
+Earnings<-as.matrix(log(new_data['Median']))
+Total_majors<-as.matrix(log(new_data['Total']))
+major_category<-as.factor(new_data$Major_category)
+proportion_of_women<-as.matrix(new_data["ShareWomen"])
+
+model1<-lm(Earnings~proportion_of_women+Total_majors+major_category)
+table1<-tab_model(model1)
+table1
+
+```
+
 
 
 
@@ -203,10 +266,20 @@ plot5+theme(panel.background = element_rect(fill = "white"))+labs(title="FIGURE 
 
 #### References
 
-https://files.eric.ed.gov/fulltext/ED536572.pdf 
-Christiann,C.& Catherine,H.(2012).Graduating to a Pay Gap: The Earnings of Women and Men One Year after College Graduation.AAUW.
 
-https://www.glassdoor.com/research/app/uploads/sites/2/2017/04/FULL-STUDY-PDF-Gender-Pay-Gap2FCollege-Major.pdf
-Andrew,C.& Jyotsna,J.(2017).The Pipeline Problem: How College Majors Contribute to the Gender Pay Gap.Glassdoor.
+Christiann,C.& Catherine,H.(2012).Graduating to a Pay Gap: The Earnings of Women and Men One Year after College Graduation.AAUW.Retrieved from; https://files.eric.ed.gov/fulltext/ED536572.pdf 
+
+
+Andrew,C.& Jyotsna,J.(2017).The Pipeline Problem: How College Majors Contribute to the Gender Pay Gap.Glassdoor. Retrieved from; https://www.glassdoor.com/research/app/uploads/sites/2/2017/04/FULL-STUDY-PDF-Gender-Pay-Gap2FCollege-Major.pdf
 
 Retrieved from; https://bookdown.org/yihui/rmarkdown/html-document.html
+
+(Antoinette Flores, 2016).EDUCATION, POSTSECONDARY:The Big Difference Between Women and Men’s Earnings After College(More College Degrees, Lower Wages).Center for American Progress.Retrieved from; https://www.americanprogress.org/issues/education-postsecondary/reports/2016/09/13/143412/the-big-difference-between-women-and-mens-earnings-after-college/
+
+(Sarah Green Carmichael, 2017).GENDER:Women Dominate College Majors That Lead to Lower-Paying Work. Havard Business Review. Retrieved from; https://hbr.org/2017/04/women-dominate-college-majors-that-lead-to-lower-paying-work
+ 
+STHDA.ggplot2 barplots : Quick start guide - R software and data. Retrieved from; visualizationhttp://www.sthda.com/english/wiki/ggplot2-barplots-quick-start-guide-r-software-and-data-visualization 
+
+Stackoverflow.Retrieved from; https://stackoverflow.com/questions/5208679/order-bars-in-ggplot2-bar-graph & https://stackoverflow.com/questions/3872070/how-to-force-r-to-use-a-specified-factor-level-as-reference-in-a-regression
+
+(Daniel Lüdecke, 2020).Summary of Regression Models as HTML Table. Retrieved from; https://cran.r-project.org/web/packages/sjPlot/vignettes/tab_model_estimates.html
