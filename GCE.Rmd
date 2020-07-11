@@ -1,0 +1,212 @@
+---
+title: "Visualizing College Majors, Gender and Earnings Using R Markdown"
+author: "Swintabel Agyei"
+date: "6/19/2020"
+output:
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: 4
+  word_document:
+    toc: yes
+    toc_depth: '4'
+    df_print: paged
+  pdf_document:
+    
+    toc: yes
+    toc_depth: '4'
+urlcolor: blue
+---
+
+
+### **INTRODUCTION**
+
+
+
+
+#### MOTIVATION
+
+The relevance of employment is really earnings. Simple macro economics says that, higher incomes reflect in higher consumption and higher demand leading to high overall motivation for increased production which facilitates development. This is the reasons why employment is a sensitive topic in relation to developemnt and the more reason I want to dedicate this project to exploring an interesting topic of the relationship that exists amongst earnings, gender and college courses. 
+
+Some researchers say that the low earnings of graduates are as a result of poor choices of college courses, there are others who have also said that gender is major determining factor of earnings.
+
+In this project, I will be exploring the relationship that exists amongst college majors, an individual's gender and earnings with a dataset generated from some college graduates between 2010 and 2012. The dataset I would be using can be found at [kaggle](https://www.kaggle.com/samaxtech/college-earnings-by-major).
+
+
+
+#### DATASET
+
+The dataset I would be using for this project is called  recent-grad.csv. As mentioned above, I retrieved it from Kaggle. According to another [kernel](https://www.kaggle.com/suugaku/dataquest-visualizing-earnings-by-college-major), the data was initially collected and aggregated by the [AMERICAN COMMUNITY SURVEY (ACS)](https://www.census.gov/programs-surveys/acs/data/pums.html). The current version of the data I will be using was extracted from the original data by [fiftythirtytwo](https://github.com/fivethirtyeight/data/tree/master/college-majors).
+
+
+
+
+#### ORIGINAL PROBLEM AND QUESTIONS OF INQUIRY 
+
+The original reason for this version of the dataset was the story; [The Economic Guide To Picking A College Major](https://fivethirtyeight.com/features/the-economic-guide-to-picking-a-college-major/). The major points made by this story was the fact that some Engineering and science courses are the courses that pay on the job market. However, majority of students offer courses that are not as rewarding in terms of earnings and jobs like Psychology and other social sciences. Likewise, some reseachers also say that the jobs that primarily employ men tend to pay more than the jobs that primarily employ women; Also, One year after graduation, a pay gap exists between women and men who majored in the same field (Christianne & Catherine, 2012, pp.2). Many college majors that lead to high-paying roles in tech and engineering are male dominated, while majors that lead to lower-paying roles in social sciences and liberal arts tend to be female-dominated, placing men in higher-paying career pathways, on average (Andrew & Jyotsna, 2017,pp.2).
+
+These conclusions by these researchers have propelled me to explore this dataset to have a view into the relationships that exist amongst college courses, gender and earnings. In particular, I am curious to find some answers to the following questions:
+
+1. What relationship exists between gender share of a college course and potential earnings?
+
+2. What relationship exists between college courses and earnings?
+
+3. what relationship exists between gender and college courses?
+
+4. How much does gender and college course together determine earnings?
+
+
+#### SCOPE OF SOLUTION
+
+To help me find solutions to my above stated questions, I would be using GGPLOT2 for visualization.
+
+I may not need certain variables in the dataset and hence, they would be silent variables in my analysis.  
+
+I will first explore a one-to-one relatioships between my variables of interest and then look out for any interractions therein.
+
+For every visualization i would explain the story told and see if it supports previous research on the topic and then, what i can make of the story.
+
+In the concluding part of my visualization, i will put together my findings and recommend other projects worth exploring in this data.
+
+Lastly, since my focus here is visualization, I would not be showing any preliminary data cleaning that i would be doing.
+
+
+### **EXPLORATION OF DATA**
+
+
+
+
+#### DESCRIPTION OF DATASET PARAMETERS
+
+The data is basically comprised of 21 variables and 173 observations. The variables are made of elements such as;
+```{r, include=FALSE}
+library(dplyr)
+```
+
+```{r, include=FALSE}
+gce_data<-read.csv("F:/micro masters/DATA ANALYSIS/capstone 3/datasets_83456_193728_recent-grads.csv")
+recent_grads<-tbl_df(gce_data)
+names(recent_grads)
+```
+
+
+
+Each observation of the data includes a particular college major and some information on a certain number of people who offered the course in college. Some typical observations look like this;
+
+```{r, echo=FALSE}
+head(recent_grads,3)
+```
+
+
+According to [fiftythirtytwo](https://github.com/fivethirtyeight/data/tree/master/college-majors), these are the detailed desription of the various variables in the dataset.
+
+![](F:/micro masters/DATA ANALYSIS/capstone 3/desc header1.JPG)
+
+```{r, echo=FALSE}
+recent_grad<-which(complete.cases(recent_grads))
+finalgrad<-recent_grads[recent_grad,]
+rm(recent_grad)
+library(tidyverse)
+library(ggplot2)
+```
+
+
+### **ANALYSIS OF DATA**
+
+To begin the analysis of the data, I am curious to find out some answers to my first question of interest:
+
+**1. What relationship exists between gender share of a college course and potential earnings?**
+
+To find out some answers to this question, I am making use of a scatter plot to look out for any relationship that may exist between "sharewomen" and "median earnings"
+
+#### Gender and Earnings
+
+From the diagram below, it is seen that as the percentage of women majoring in a particular course increases, the median earning of year round employees also fall. That is, there is a negative relationship between earnings and gender share of a college course.
+
+```{r, echo=FALSE}
+rm(recent_grads)
+rm(gce_data)
+new_data<-gather(finalgrad,key="gender",value = count, -c( "Rank", "Major_code", "Major", "Total","Major_category", "ShareWomen", "Sample_size", "Employed", "Full_time", "Part_time", "Full_time_year_round", "Unemployed","Unemployment_rate","Median", "P25th","P75th", "College_jobs", "Non_college_jobs","Low_wage_jobs"))
+
+new_data2<-gather(finalgrad,key="gender2",value = Median, -c( "Rank", "Major_code", "Major", "Total","Major_category", "ShareWomen", "Sample_size", "Employed", "Full_time", "Part_time", "Full_time_year_round", "Unemployed","Unemployment_rate","P25th","P75th", "College_jobs", "Non_college_jobs","Low_wage_jobs"))
+
+
+
+major_earnings<-finalgrad%>%group_by(Major_category)%>%summarise(Medians=median(Median))
+
+major_earnings2<-new_data2%>%group_by(Major_category,gender2)%>%summarise(Medians=median(Median))
+
+gendersum<-new_data%>%group_by(gender,Major_category,count)%>%summarise(Medians1=median(Median))
+```
+
+
+```{r, echo=FALSE, fig.height=6, fig.width=8}
+plot1<-ggplot(data=finalgrad, aes(x=ShareWomen*100, y=Median))+geom_point(shape=21, fill="steelblue", color="steelblue")+geom_vline(xintercept = 50)
+
+plot2<-plot1+scale_y_continuous(labels = scales::dollar)+labs(title="FIGURE 1: GENDER SHARE AND EARNINGS", y="Median Earnings", x="percentage of women")
+
+plot2+theme(panel.background = element_rect(fill = "white"))+theme(panel.border = element_rect(linetype = "dashed", fill= NA))+theme(plot.title = element_text(hjust = 0.5, face = "bold", colour = "cadetblue"))
+```
+
+
+**2. What relationship exists between college courses and earnings?**
+
+#### College Majors and Earnings
+
+```{r, echo=FALSE,  fig.height=6, fig.width=9}
+plot3<-ggplot(data=major_earnings, aes(x=reorder(Major_category,-Medians), y=Medians,width=0.5, fill=Major_category, label=Medians))+geom_bar(stat = "identity")+theme(axis.text.x=element_text(angle = 90, vjust=0.5, hjust=1), legend.position ="bottom", legend.title.align = 1)+coord_flip()
+
+plot3+theme(panel.background = element_rect(fill = "white"))+labs(title="FIGURE 2: COLLEGE MAJORS AND EARNINGS", y="Median Earnings")+theme(plot.title = element_text(hjust = 0.5, face = "bold", colour = "cadetblue"))+scale_y_continuous(labels = scales::dollar)
+```
+
+
+
+
+#### 3. College Majors and Gender
+```{r, echo=FALSE, fig.height=6, fig.width=9}
+
+
+plot4<-ggplot(data=gendersum, aes(x=Major_category, y=count, fill=gender, width=0.5, label=Major_category))+geom_bar(stat = "identity", position = position_dodge(width = 0.5), width = 1)+theme(axis.text.x=element_text(angle = 90, vjust=0.5, hjust=1), legend.position ="top", legend.title.align = 0.7)+scale_y_continuous(labels = scales::comma)+scale_fill_manual(values = c("steelblue","pink"))
+
+plot4+theme(panel.background = element_rect(fill = "white"))+labs(title="FIGURE 3: COLLEGE MAJORS AND GENDER", y="Total Number of Students")+theme(plot.title = element_text(hjust = 0.5, face = "bold", colour = "cadetblue"))+coord_flip()
+
+```
+
+
+```{r, echo=FALSE, fig.height=6, fig.width=9}
+library(grid)
+library(RColorBrewer)
+cols<-colorRampPalette(brewer.pal(9,"Set1"))
+colourcount<-cols(length(unique(gendersum$Major_category)))
+
+
+plot6<-ggplot(data=gendersum, aes(x=gender, y=count, fill=Major_category, width=0.5, label=gender))+geom_bar(stat = "identity", width = 1)+theme(axis.text.x=element_text(angle = 90, vjust=0.5, hjust=1), legend.position ="right", legend.title.align = 0.7)+scale_y_continuous(labels = scales::comma)+scale_fill_manual(values =colourcount)
+
+plot6+theme(panel.background = element_rect(fill = "white"))+labs(title="FIGURE 3: COLLEGE MAJORS AND GENDER", y="Total Number of Students")+theme(plot.title = element_text(hjust = 0.5, face = "bold", colour = "cadetblue"))+coord_flip()
+
+```
+
+
+
+** How much does gender and college course together determine earnings?**
+
+```{r, echo=FALSE, fig.height=7, fig.width=9}
+plot5<-ggplot(data=major_earnings2, aes(x=reorder(Major_category,-Medians), y=Medians,width=0.8, fill=gender2, label=Major_category))+geom_bar(stat = "identity", width=0.8, position = position_dodge(width=0.5))+theme(axis.text.x=element_text(angle = 90, vjust=0.5, hjust=1), legend.position ="top", legend.title.align = 1)+coord_flip()+geom_col(width = 0.8, position = position_dodge(0.5))
+
+
+plot5+theme(panel.background = element_rect(fill = "white"))+labs(title="FIGURE 4: COLLEGE MAJORS, GENDER AND EARNINGS", y="Median Earnings", x="Major Category")+theme(plot.title = element_text(hjust = 0.5, face = "bold", colour = "cadetblue"))+scale_y_continuous(labels = scales::dollar)+scale_fill_manual(values = c("steelblue","black","orange"))
+```
+
+
+
+
+
+#### References
+
+https://files.eric.ed.gov/fulltext/ED536572.pdf 
+Christiann,C.& Catherine,H.(2012).Graduating to a Pay Gap: The Earnings of Women and Men One Year after College Graduation.AAUW.
+
+https://www.glassdoor.com/research/app/uploads/sites/2/2017/04/FULL-STUDY-PDF-Gender-Pay-Gap2FCollege-Major.pdf
+Andrew,C.& Jyotsna,J.(2017).The Pipeline Problem: How College Majors Contribute to the Gender Pay Gap.Glassdoor.
+
+Retrieved from; https://bookdown.org/yihui/rmarkdown/html-document.html
