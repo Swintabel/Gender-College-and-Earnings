@@ -1,7 +1,7 @@
 # Gender-College-and-Earnings
 Data visualization in R
 
-**Please find my findings and full work of this data [Swintabel@io](https://swintabel.github.io/Gender-College-and-Earnings/GCE.html)**
+**Please find my findings and full work of this data as well as references at [Swintabel@io](https://swintabel.github.io/Gender-College-and-Earnings/GCE.html)**
 
 #### MOTIVATION
 
