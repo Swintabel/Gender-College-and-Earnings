@@ -1,7 +1,7 @@
 # Gender-College-and-Earnings
 Data visualization in R
 
-**Please find my findings and full work of this data [Swintabel@io](https://swintabel.github.io/Gender-College-and-Earnings/GCE.html)**
+**Please find my findings and full work of this data as well as references at [Swintabel@io](https://swintabel.github.io/Gender-College-and-Earnings/GCE.html)**
 
 #### MOTIVATION
 
@@ -69,7 +69,7 @@ More like, if women want the earnings of a particular profession to fall, all th
 
 It is also noticed from the diagram that, as the share of women drops, the occurences of outrageous salaries also become more ubiquitous.
 
-![plot1](C:/Users/user/Documents/GitHub/Gender-College-and-Earnings/Rplot1.jpeg)
+![](https://github.com/Swintabel/Gender-College-and-Earnings/blob/master/Rplot1.jpeg?raw=true)
 
 #### **COLLEGE MAJORS AND EARNING**
 
@@ -82,7 +82,7 @@ According to some researchers, women tend to enroll in graduate fields with lowe
 Hence, it is worth inquiring from the data;
 **What relationship exists between college courses and earnings?** 
 
-![plot2](C:/Users/user/Documents/GitHub/Gender-College-and-Earnings/Rplot2.jpeg)
+![](https://github.com/Swintabel/Gender-College-and-Earnings/blob/master/Rplot2.jpeg?raw=true)
 
 From the figure above, it is noticed that the major with the highest median earnings is Engineering and the lowest is Psychology and Social work. Computers & Mathematics as well as Business also do pay well and they are followed by Social Science, Biology and Law. The likes of Arts, Humanities& liberal Arts and Education find themselves on the lower side.
 
@@ -98,7 +98,7 @@ From the initial infromation given by the above diagram, the courses that pay mo
 
 At this stage, I would like to know what the data say about 'Male courses' and 'Female courses'
 
-![plot3](C:/Users/user/Documents/GitHub/Gender-College-and-Earnings/Rplot3.jpeg)
+![](https://github.com/Swintabel/Gender-College-and-Earnings/blob/master/Rplot3.jpeg?raw=true)
 
 **IS IT A QUESTION OF DEMAND AND SUPPLY?**
 
@@ -110,7 +110,7 @@ I would say health is a very relevant field and therefore should pay better base
 
 Engineering although does not have a very high number of majors, it is not very low in numbers either. This is same for Computers and Mathematics but they pay very high and they account for the outrageous pays seen in 'Figure 1'. Interestingly, they are highly male dominated.
 
-![plot4](C:/Users/user/Documents/GitHub/Gender-College-and-Earnings/Rplot4.jpeg)
+![](https://github.com/Swintabel/Gender-College-and-Earnings/blob/master/Rplot4.jpeg?raw=true)
 
 It is also worth noting from 'figure 4' that this data set has more women that men counts. This re-emphisize how male-dominated engineering and computers & Mathematics are.
 
@@ -120,7 +120,7 @@ It is also worth noting from 'figure 4' that this data set has more women that m
 
 When it comes to the interaction of the three variables, the interesting trend here is that, for any two majors with compratively equal number of majors, if the women exceed the men in one than the other, then the median pay becomes lesser. For instance, 'interdisciplinary and Education', 'Biology & Life sciences compared to Computers and Mathematics'.'engineering compared to Law & Policy'.
 
-![plot5](C:/Users/user/Documents/GitHub/Gender-College-and-Earnings/Rplot5.jpeg)
+![](https://github.com/Swintabel/Gender-College-and-Earnings/blob/master/Rplot5.jpeg?raw=true)
 
 ### **STATISTICAL ANALYSIS OF DATA**
 
@@ -139,7 +139,7 @@ To conduct a simple statistical analysis of the dataset, i will use a multivaria
 
 The table below displays the findings from the model.
 
-![stats](C:/Users/user/Documents/GitHub/Gender-College-and-Earnings/regression analysis.JPG)
+![](https://github.com/Swintabel/Gender-College-and-Earnings/blob/master/regression%20analysis.JPG?raw=true)
 
 
 #### **INTERPRETATION OF RESULTS**
