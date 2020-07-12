@@ -16,7 +16,7 @@ The dataset I would be using for this project is called  recent-grad.csv. As men
 
 According to [fiftythirtytwo](https://github.com/fivethirtyeight/data/tree/master/college-majors), these are the detailed desription of the various variables in the dataset.
 
-![](F:/micro masters/DATA ANALYSIS/capstone 3/desc header1.JPG)
+![](C:/Users/user/Documents/GitHub/Gender-College-and-Earnings/desc.jpg.JPG)
 
 #### ORIGINAL PROBLEM AND QUESTIONS OF INQUIRY 
 
