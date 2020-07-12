@@ -176,10 +176,11 @@ According to some researchers, women tend to enroll in graduate fields with lowe
 Hence, it is worth inquiring from the data;
 **What relationship exists between college courses and earnings?** 
 
-```{r, echo=FALSE,  fig.height=6, fig.width=9}
-plot3<-ggplot(data=major_earnings, aes(x=reorder(Major_category,-Medians), y=Medians,width=0.5, fill=Major_category, label=Medians))+geom_bar(stat = "identity")+theme(axis.text.x=element_text(angle = 90, vjust=0.5, hjust=1), legend.position ="bottom", legend.title.align = 1)+coord_flip()
+```{r, echo=FALSE,  fig.height=8, fig.width=9}
+plot3<-ggplot(data=major_earnings, aes(x=reorder(Major_category,-Medians), y=Medians,width=0.5, fill=Major_category, label=Medians))+geom_bar(stat = "identity")+theme(axis.text.x=element_text(angle = 90, vjust=0.5, hjust=1), legend.position ="right", legend.title.align = 1)
 
-plot3+theme(panel.background = element_rect(fill = "white"))+labs(title="FIGURE 2: COLLEGE MAJORS AND EARNINGS", y="Median Earnings")+theme(plot.title = element_text(hjust = 0.5, face = "bold", colour = "cadetblue"))+scale_y_continuous(labels = scales::dollar)
+plot3<-plot3+theme(panel.background = element_rect(fill = "white"))+labs(title="FIGURE 2: COLLEGE MAJORS AND EARNINGS", y="Median Earnings", x= "major category")+theme(plot.title = element_text(hjust = 0.5, face = "bold", colour = "cadetblue"))+scale_y_continuous(labels = scales::dollar)
+plot3
 ```
 
 From the figure above, it is noticed that the major with the highest median earnings is Engineering and the lowest is Psychology and Social work. Computers & Mathematics as well as Business also do pay well and they are followed by Social Science, Biology and Law. The likes of Arts, Humanities& liberal Arts and Education find themselves on the lower side.
@@ -203,8 +204,8 @@ At this stage, I would like to know what the data say about 'Male courses' and '
 
 plot4<-ggplot(data=gendersum, aes(x=Major_category, y=count, fill=gender, width=0.5, label=Major_category))+geom_bar(stat = "identity", position = position_dodge(width = 0.5), width = 1)+theme(axis.text.x=element_text(angle = 90, vjust=0.5, hjust=1), legend.position ="top", legend.title.align = 0.7)+scale_y_continuous(labels = scales::comma)+scale_fill_manual(values = c("steelblue","pink"))
 
-plot4+theme(panel.background = element_rect(fill = "white"))+labs(title="FIGURE 3: COLLEGE MAJORS AND GENDER", y="Total Number of Students")+theme(plot.title = element_text(hjust = 0.5, face = "bold", colour = "cadetblue"))+coord_flip()
-
+plot4<-plot4+theme(panel.background = element_rect(fill = "white"))+labs(title="FIGURE 3: COLLEGE MAJORS AND GENDER", y="Total Number of Students")+theme(plot.title = element_text(hjust = 0.5, face = "bold", colour = "cadetblue"))+coord_flip()
+plot4
 ```
 **IS IT A QUESTION OF DEMAND AND SUPPLY?**
 
@@ -225,8 +226,8 @@ colourcount<-cols(length(unique(gendersum$Major_category)))
 
 plot6<-ggplot(data=gendersum, aes(x=gender, y=count, width=0.5, label=gender, fill=gender))+geom_bar(stat = "identity", width = 1)+theme(axis.text.x=element_text(angle = 90, vjust=0.5, hjust=1), legend.position ="right", legend.title.align = 0.7)+scale_y_continuous(labels = scales::comma)+scale_fill_manual(values =colourcount)
 
-plot6+theme(panel.background = element_rect(fill = "white"))+labs(title="FIGURE 4: COLLEGE MAJORS AND GENDER", y="Total Number of Students")+theme(plot.title = element_text(hjust = 0.5, face = "bold", colour = "cadetblue"))+coord_flip()
-
+plot6<- plot6+theme(panel.background = element_rect(fill = "white"))+labs(title="FIGURE 4: COLLEGE MAJORS AND GENDER", y="Total Number of Students")+theme(plot.title = element_text(hjust = 0.5, face = "bold", colour = "cadetblue"))+coord_flip()
+plot6
 ```
 It is also worth noting from 'figure 4' that this data set has more women that men counts. This re-emphisize how male-dominated engineering and computers & Mathematics are.
 
@@ -243,7 +244,8 @@ When it comes to the interaction of the three variables, the interesting trend h
 plot5<-ggplot(data=major_earnings2, aes(x=reorder(Major_category,-Medians), y=Medians,width=0.8, fill=gender2, label=Major_category))+geom_bar(stat = "identity", width=0.8, position = position_dodge(width=0.5))+theme(axis.text.x=element_text(angle = 90, vjust=0.5, hjust=1), legend.position ="top", legend.title.align = 1)+coord_flip()+geom_col(width = 0.8, position = position_dodge(0.5))
 
 
-plot5+theme(panel.background = element_rect(fill = "white"))+labs(title="FIGURE 5: COLLEGE MAJORS, GENDER AND EARNINGS", y="Median Earnings", x="Major Category")+theme(plot.title = element_text(hjust = 0.5, face = "bold", colour = "cadetblue"))+scale_y_continuous(labels = scales::dollar)+scale_fill_manual(values = c("steelblue","black","orange"))
+plot5<-plot5+theme(panel.background = element_rect(fill = "white"))+labs(title="FIGURE 5: COLLEGE MAJORS, GENDER AND EARNINGS", y="Median Earnings", x="Major Category")+theme(plot.title = element_text(hjust = 0.5, face = "bold", colour = "cadetblue"))+scale_y_continuous(labels = scales::dollar)+scale_fill_manual(values = c("steelblue","black","orange"))
+plot5
 ```
 
 
@@ -294,6 +296,8 @@ The model shows that a 1% increase in the total number of people majoring in any
 ##### MAJOR CATEGORY
 
 The results show that all other major categories are associated with earnings that are **higher than that of 'Psychology & Social Work'**. The highest of them is **engineering** which is associated with earnings that are 44% higher than that of 'Psychology & Social Work'. Other majors with significantly higher earnings compared to 'Psychology & Social Work' are:**'Business' , 'Computers & Mathematics', 'Health', 'Law & Public Policy', and 'Physical Sciences'.**
+
+**The model explains about 65% of the changes that occur in earnings**
 
 #### **CONCLUSION**
 
