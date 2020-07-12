@@ -16,10 +16,9 @@ The dataset I would be using for this project is called  recent-grad.csv. As men
 
 There are detailed discriptions of the dataset parameters at [fiftythirtytwo](https://github.com/fivethirtyeight/data/tree/master/college-majors)
 
-<<<<<<< HEAD
-![](C:/Users/user/Documents/GitHub/Gender-College-and-Earnings/desc.jpg.JPG)
-=======
->>>>>>> 652b038772e4f35c98cf481eea368660e0f7e369
+
+![](https://github.com/Swintabel/Gender-College-and-Earnings/blob/master/desc.jpg.JPG?raw=true)
+
 
 #### ORIGINAL PROBLEM AND QUESTIONS OF INQUIRY 
 
